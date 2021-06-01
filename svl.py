@@ -1,5 +1,5 @@
 import psutil
-import time
+import time 
 
 def find_and_kill_proc(proc):
     """ Process -> bool
