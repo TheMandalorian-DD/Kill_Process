@@ -24,13 +24,10 @@ def research_process_by_name(name):
 def process_is_there(name):
     """ str -> bool
     Renvoie True si le process name est présent, False sinon."""
-    found = False
     for p in psutil.process_iter():
         if p.name() == name:
-            if not found:
-                found = True
-                return found
-    return found
+            return True
+    return False
 
 def run(process):
     """ Process ->
