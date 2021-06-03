@@ -21,14 +21,6 @@ def research_process_by_name(name):
         if process.name() == name:
             return process
 
-def process_is_there(name):
-    """ str -> bool
-    Renvoie True si le process name est présent, False sinon."""
-    for p in psutil.process_iter():
-        if p.name() == name:
-            return True
-    return False
-
 def run(process):
     """ Process ->
     Tant que le processus tourne, on recherche d'autre instance du même nom."""
