@@ -13,7 +13,7 @@ def find_and_kill_proc(proc):
                 process.kill()
                 if not killed:
                     killed = True
-            except psutil.NoSuchProcess:
+            except (psutil.AccessDenied, psutil.NoSuchProcess):
                 pass
     return killed
 
@@ -29,7 +29,7 @@ def research_process_by_name(name):
                     started = p.create_time()
                     process = psutil.Process(p.pid)
         return process
-    except psutil.NoSuchProcess:
+    except (psutil.AccessDenied, psutil.NoSuchProcess):
         return None
     
 
