@@ -17,14 +17,22 @@ def find_and_kill_proc(proc):
 def research_process_by_name(name):
     """ str -> Process
     Retourne le processus 'name'."""
-    for process in psutil.process_iter():
-        if process.name() == name:
-            return process
+    started = 0
+    process = None
+    try:
+        for p in psutil.process_iter():
+            if p.name() == name:
+                if p.create_time() > started:
+                    started = p.create_time()
+                    process = psutil.Process(p.pid)
+    except psutil.NoSuchProcess:
+        print("Process does not exist")
+    return process
 
 def run(process):
     """ Process ->
     Tant que le processus tourne, on recherche d'autre instance du même nom."""
-    while process and process.is_running():
+    while (process and process.is_running()) or (process.status() == psutil.STATUS_RUNNING):
         if not find_and_kill_proc(process):
             time.sleep(10)
         
