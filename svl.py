@@ -9,25 +9,29 @@ def find_and_kill_proc(proc):
         if process == proc :
             continue
         if process.info['name'] == proc.name():
-            process.kill()
-            if not killed:
-                killed = True
+            try:
+                process.kill()
+                if not killed:
+                    killed = True
+            except psutil.NoSuchProcess:
+                pass
     return killed
 
 def research_process_by_name(name):
     """ str -> Process
     Retourne le processus 'name'."""
-    started = 0
-    process = None
     try:
+        started = 0
+        process = None
         for p in psutil.process_iter():
             if p.name() == name:
                 if p.create_time() > started:
                     started = p.create_time()
                     process = psutil.Process(p.pid)
+        return process
     except psutil.NoSuchProcess:
-        print("Process does not exist")
-    return process
+        return None
+    
 
 def run(process):
     """ Process ->
