@@ -30,12 +30,10 @@ def research_process_by_name(name):
             pass
     return process
     
-    
-
 def run(process):
     """ Process ->
     As long as the process is running, we are looking for another instance of the same name."""
-    while (process and process.is_running()) or (process.status() == psutil.STATUS_RUNNING):
+    while process.is_running():
         if not find_and_kill_proc(process):
             time.sleep(10)
         
