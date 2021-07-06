@@ -1,6 +1,7 @@
 import sys
 import svl  
 import time
+import psutil
 
 
 if __name__ == '__main__':
@@ -18,6 +19,9 @@ if __name__ == '__main__':
                     time.sleep(10)
             except KeyboardInterrupt:
                 exit()
+            except (psutil.AccessDenied, psutil.NoSuchProcess):
+                pass
+            
     
     
     
